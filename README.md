@@ -1,3 +1,3 @@
 New Router for Flutter.
 
-Keep same `Navigator.of(context)` but do much more.
+Keep same old `Navigator.of(context)` but do much more.
