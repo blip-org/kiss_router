@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiss_router/example/example_screens.dart' as screens;
+import './example_screens.dart' as screens;
 import 'package:kiss_router/kiss_router.dart';
 
 KissRouter router = KissRouter(routesDelegate: screens.kissRoutes);

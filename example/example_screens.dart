@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kiss_router/example/app_bar_util.dart';
+import './app_bar_util.dart';
 
-import 'kiss_router.dart';
+import '../lib/kiss_router.dart';
 
 final kissRoutes = KissRoutesDelegate(
   routes: {
