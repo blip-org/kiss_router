@@ -83,6 +83,8 @@ ModalConfig(
 )
 ```
 
-`modalExtended` makes modal to stretch fully on the screen. fir IOS it still has some space between modal and the edge of the screen.
+`modalExtended`: makes modal to stretch fully on the screen. fir IOS it still has some space between modal and the edge of the screen.
 
-`modalEnableDrag` make modal draggable up and down for closing purposes.
+`modalEnableDrag`: make modal draggable up and down for closing purposes.
+
+`modalType`: by default `kiss_router` differentiates platforms and creates android and IOS modal bottom sheets respectievely, but in case you want to have one of which strictly defined you can use `modalType` with values `ModalType.cupertino` or `ModalType.android`
