@@ -84,5 +84,3 @@ ModalConfig(
 ```
 
 `modalExtended` makes modal to stretch fully on the screen. fir IOS it still has some space between modal and the edge of the screen.
-
-test commit
