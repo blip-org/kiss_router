@@ -72,3 +72,14 @@ class ProfileScreen() {
     }
 }
 ```
+---
+### **`ModalConfig`**
+You can modify modal windows configuration in many ways, some of the arguments that you can pass are:
+```dart
+ModalConfig(
+    modalExpanded:true, //bool
+    modalEnableDrag:true, //bool
+    modalType: true, //ModalType
+)
+```
+
