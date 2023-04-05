@@ -88,3 +88,51 @@ ModalConfig(
 `modalEnableDrag`: make modal draggable up and down for closing purposes.
 
 `modalType`: by default `kiss_router` differentiates platforms and creates android and IOS modal bottom sheets respectievely, but in case you want to have one of which strictly defined you can use `modalType` with values `ModalType.cupertino` or `ModalType.android`
+
+
+---
+## Nested routing
+To achieve nested routing, you need to define the child routes.
+
+//TODO: think better way <br><br>
+*/screens/profile.dart*
+```dart
+@KissRoute(
+    '/',
+    children: [
+        '/change_password',
+        '/change_email'
+    ]
+)
+class ProfileScreen() {
+    Widget build(BuildContext context) {
+
+    }
+}
+```
+<br>
+
+*/screens/change_password.dart*
+```dart
+@KissRoute(
+    '/change_password',
+)
+class ChangePasswordScreen() {
+    Widget build(BuildContext context) {
+
+    }
+}
+```
+<br>
+
+*/screens/change_email.dart*
+```dart
+@KissRoute(
+    '/change_email',
+)
+class ChangeEmailScreen() {
+    Widget build(BuildContext context) {
+
+    }
+}
+```
