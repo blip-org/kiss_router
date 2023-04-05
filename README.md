@@ -28,7 +28,7 @@ class ProfileScreen() {
 ```
 
 # More Control
-Define initial route: <br>
+### **Define initial route:** <br>
 Defining `isInitial` as `true`, makes route initial.
 If you don't define it kiss_router will search for '/' route
 
@@ -53,3 +53,22 @@ class ProfileScreen() {
 ```
 
 If you don'd define the `isInitial:true` for the route and will not have the'/' route or you will define `isInitial:true` for multiple routes it will throw the runtime exception.
+
+
+---
+### **Screen as modal window.**
+It is possible to define the route as modal bottom sheet window directly from the `@KissRoute` annotation by passing the `modalConfig` argument to the `@KissRoute`. 
+
+`modalConfig` is by default null and until it is null route will behave as 
+normal route, But as soon as you pass modalConfig argument a value it will become the modal.
+```dart
+@KissRoute(
+    '/',
+     modalConfig: ModalConfig(),
+)
+class ProfileScreen() {
+    Widget build(BuildContext context) {
+
+    }
+}
+```
