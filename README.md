@@ -1,8 +1,8 @@
 ## New Router for Flutter.
 
-### **Keep same old `Navigator.of(context)` but do much more.**
+**Keep same old `Navigator.of(context)` but do much more.**
 
-### Just define `@KissRoute()` annotation above the screen and run `build_runner`, that is all you need to start routing.
+Just define `@KissRoute()` annotation above the screen and run `build_runner`, that is all you need to start routing.
 
 
 # Simplest usages:
