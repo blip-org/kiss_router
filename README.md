@@ -1,6 +1,9 @@
-New Router for Flutter.
+## New Router for Flutter.
 
-Keep same old `Navigator.of(context)` but do much more.
+### **Keep same old `Navigator.of(context)` but do much more.**
+
+### Just define `@KissRoute()` annotation above the screen and run `build_runner`, that is all you need to start routing.
+
 
 # Simplest usages:
 This generates route name depending on the camel case. <br>
@@ -135,4 +138,22 @@ class ChangeEmailScreen() {
 
     }
 }
+```
+
+# BottomNavigationBar Navigation
+//TODO: Define the interface specifications.
+
+
+# Guards
+//TODO: Define the interface specifications for the guards for example AuthGuard.
+
+# Type Safety and custom kiss.route() function
+//TODO: Define the interface specifications, might be useful but main concentration is for Navigator.of(context) to be usable again.<br>
+e.g: 
+```dart
+
+final kiss = KissRouter.of(context);
+kiss.push('/profile', );
+kiss.pop('/profile');
+kiss.pushNamed('/profile');
 ```
