@@ -29,7 +29,7 @@ class ProfileScreen() {
 
 # More Control
 Define initial route: <br>
-Defining isInitial as true, makes route initial.
+Defining `isInitial` as `true`, makes route initial.
 If you don't define it kiss_router will search for '/' route
 
 and will make it initial.
@@ -52,3 +52,4 @@ class ProfileScreen() {
 }
 ```
 
+If you don'd define the `isInitial:true` for the route and will not have the'/' route or you will define `isInitial:true` for multiple routes it will throw the runtime exception.
