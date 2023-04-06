@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as mb;
 
-part 'route_model.dart';
-part 'route_name.dart';
+part 'models/route.dart';
+part 'models/route_name.dart';
 part 'routes.dart';
 part 'provider.dart';
 part 'layout.dart';
@@ -63,8 +63,7 @@ class KissRouter {
     ];
   }
 
-  PreferredSizeWidget _getAppBar(
-      {required BuildContext context, PreferredSizeWidget? appBar}) {
+  PreferredSizeWidget _getAppBar({required BuildContext context, PreferredSizeWidget? appBar}) {
     if (appBar == null) {
       return noAppBar;
     }
