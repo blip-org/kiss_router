@@ -163,7 +163,7 @@ Here you see the example of the custom guards which you can define by yourself, 
 Guards are the simple classes with `call()` method returning either `true` or `false`. If the `call()` returns `true` it means that rules of the guard has been passed. <br>
 i.e: defining the guard:
 ```dart
-class MyCustomGuard extends BaseGuard {
+class MyCustomGuard implements BaseGuard {
 
     @override
     bool call() {
@@ -174,7 +174,6 @@ class MyCustomGuard extends BaseGuard {
     }
 }
 ```
-
 
 # Type Safety and custom kiss.route() function
 //TODO: Define the interface specifications, might be useful but main concentration is for Navigator.of(context) to be usable again.<br>
