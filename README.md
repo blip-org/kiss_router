@@ -145,7 +145,19 @@ class ChangeEmailScreen() {
 
 
 # Guards
-//TODO: Define the interface specifications for the guards for example AuthGuard.
+You can pass the different types of guards to the route, so this route will or will not be accessed depending on the rules of the guards.
+```dart
+@KissRoute(
+    '/change_email',
+    guards: [CustomAuthGuard, CustomCheckGuard]
+)
+class ChangeEmailScreen() {
+    Widget build(BuildContext context) {
+
+    }
+}
+```
+
 
 # Type Safety and custom kiss.route() function
 //TODO: Define the interface specifications, might be useful but main concentration is for Navigator.of(context) to be usable again.<br>
