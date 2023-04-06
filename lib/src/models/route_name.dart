@@ -1,4 +1,4 @@
-part of kiss_router;
+import 'package:flutter/material.dart';
 
 @immutable
 class KissRouteName {
