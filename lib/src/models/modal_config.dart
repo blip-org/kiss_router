@@ -1,10 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:kiss_router/src/kiss_router.dart';
+
+import '../enums/modal_type.dart';
 
 /// [ModalConfig] allows configuring modal bottom sheet routes.
 
 class ModalConfig {
-  /// Tell the kiss_router if the modal window can be dismissed
+  /// Tell the [KissRouter] if the modal window can be dismissed
   final bool isDismissible;
 
   /// background color of the modal window, can be overridden if you define
@@ -25,6 +28,15 @@ class ModalConfig {
 
   /// Define if you want to stretch the modal with full height of the screen;
   final bool expanded;
+
+  /// You can, what type of the modal do you want to have.
+  /// [KissRouter] automatically detects platform and chooses which type of a
+  /// modal it should show, but in case you want to show either android or
+  /// cupertino modal for every platform you specifically define it.
+  ///
+  /// For available types see the [ModalType]
+  final ModalType? modalType;
+
   final bool enableDrag;
   final bool bounce;
 
@@ -32,16 +44,8 @@ class ModalConfig {
     this.isDismissible = true,
     this.modalBarrierColor = Colors.transparent,
     this.expanded = true,
+    this.modalType,
     this.enableDrag = false,
     this.bounce = false,
   });
-}
-
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
 }

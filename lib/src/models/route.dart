@@ -2,12 +2,6 @@ part of kiss_router;
 
 typedef ScreenWidget<A> = Widget Function(BuildContext context, A? arguments);
 
-enum ModalType {
-  cupertino,
-  material,
-  bar,
-}
-
 class KissRouteModel<A> {
   final ScreenWidget<A> widget;
   final Map<KissRouteName, KissRouteModel> subRoutes;

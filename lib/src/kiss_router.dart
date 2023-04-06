@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as mb;
 
+import 'enums/modal_type.dart';
 import 'models/route_name.dart';
 
 part 'models/route.dart';
