@@ -157,6 +157,7 @@ class ChangeEmailScreen() {
     }
 }
 ```
+Here you see the example of the custom guards which you can define by yourself, but `kiss_router` supports predefined guards, such as: `FirebaseAuthGuard()`, `TokenAuthGuard()`, 
 
 
 # Type Safety and custom kiss.route() function
