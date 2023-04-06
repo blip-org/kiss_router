@@ -5,7 +5,6 @@ import 'package:kiss_router/src/kiss_router.dart';
 import '../enums/modal_type.dart';
 
 /// [ModalConfig] allows configuring modal bottom sheet routes.
-
 class ModalConfig {
   /// Tell the [KissRouter] if the modal window can be dismissed
   final bool isDismissible;
@@ -37,7 +36,11 @@ class ModalConfig {
   /// For available types see the [ModalType]
   final ModalType? modalType;
 
+  /// Enable drag for the modal window, mostly for closing purposes.
   final bool enableDrag;
+
+  /// The bounce parameter specifies if the bottom sheet can go beyond the
+  /// top boundary while dragging
   final bool bounce;
 
   ModalConfig({
