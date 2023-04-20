@@ -27,7 +27,7 @@ class KissRouter {
     KissRouteModel route = _getRoute(settings);
 
     if (route.isModal && route.modalType == ModalType.material) {
-      return mb.ModalBottomSheetRoute(
+      return mb.ModalSheetRoute(
         builder: (_) => buildPageWithAuthCheck(settings),
         settings: settings,
         expanded: route.modalExpanded,
