@@ -2,6 +2,7 @@ name: kiss_router
 description: A new Flutter package project.
 version: 0.0.1
 homepage: https://github.com
+publish_to: none
 
 environment:
   sdk: ">=2.17.5 <3.0.0"
@@ -10,7 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  modal_bottom_sheet: ^2.1.2
+  modal_bottom_sheet:
+    path: "./modal_bottom_sheet/modal_bottom_sheet"
   flutter_bloc: ^7.3.3
 
 dev_dependencies:
