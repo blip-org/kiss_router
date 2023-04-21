@@ -19,6 +19,8 @@ class KissRouter {
 
   final KissRoutesDelegate routesDelegate;
 
+  String get initialRoute => routesDelegate.initialRoute.toString();
+
   KissRouteModel _getRoute(RouteSettings? routeSettings) {
     return routesDelegate.getRoute(routeSettings);
   }

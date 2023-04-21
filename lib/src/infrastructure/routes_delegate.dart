@@ -1,5 +1,3 @@
-
-
 part of kiss_router;
 
 class KissRoutesDelegate {
@@ -18,6 +16,8 @@ class KissRoutesDelegate {
   late final KissRouteName _initialRoute;
 
   late final Map<KissRouteName, KissRouteModel> _routes;
+
+  KissRouteName get initialRoute => _initialRoute;
 
   KissRouteModel getRoute(RouteSettings? routeSettings) {
     KissRouteName? routeName;
