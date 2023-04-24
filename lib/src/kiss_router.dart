@@ -1,7 +1,7 @@
 library kiss_router;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiss_router/src/models/group.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as mb;
 
 import 'enums/modal_type.dart';
@@ -90,24 +90,25 @@ class KissRouter {
   Widget buildPageWithAuthCheck(RouteSettings settings) {
     KissRouteModel route = _getRoute(settings);
     return Builder(builder: (context) {
-      final isAuthenticated = true; //context.watch<KissProvider>().isAuthenticated;
+      // context.watch<KissProvider>().isAuthenticated;
+      const isAuthenticated = true;
 
       if (isAuthenticated && route.isPrivate) {
         return _getLayout(route.buildWidget(context), route);
       }
 
-      if (!isAuthenticated && route.isPrivate) {
-        if (route.substituteRouteName == null) {
-          fire404(context);
-        } else {
-          route = _getRoute(RouteSettings(
-            name: route.substituteRouteName?.value,
-            arguments: settings.arguments,
-          ));
+      // if (!isAuthenticated && route.isPrivate) {
+      //   if (route.substituteRouteName == null) {
+      //     fire404(context);
+      //   } else {
+      //     route = _getRoute(RouteSettings(
+      //       name: route.substituteRouteName?.value,
+      //       arguments: settings.arguments,
+      //     ));
 
-          return _getLayout(route.buildWidget(context), route);
-        }
-      }
+      //     return _getLayout(route.buildWidget(context), route);
+      //   }
+      // }
 
       return _getLayout(route.buildWidget(context), route);
     });
