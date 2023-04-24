@@ -1,12 +1,11 @@
-import 'package:kiss_router/kiss_router.dart';
 import 'package:flutter/material.dart';
 
 class GroupModel {
-  /// A non-nullable list of [KissRouteName]s.
+  /// A non-nullable list of route names.
   ///
   /// These routes will be wrapped with a top-level
   /// widget/route by provided [builder].
-  final List<KissRouteName> routes;
+  final List<String> routes;
 
   /// A unique identification string for current [GroupModel].
   ///

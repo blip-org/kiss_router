@@ -4,6 +4,25 @@ import './app_bar_util.dart';
 import '../lib/kiss_router.dart';
 
 final kissRoutes = KissRoutesDelegate(
+  groups: [
+    GroupModel(
+      flowID: 'accountflow',
+      routes: [
+        KissRouteGroupName('/account', includeSubRoutes: true),
+        KissRouteGroupName('/account'),
+        KissRouteGroupName('/profile'),
+      ],
+      builder: (context, child) {
+        return BlocBuilder<XBloc, XState>(builder: (context, state) {
+          if (state.status.isLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          return child;
+        });
+      },
+    ),
+  ],
   routes: {
     KissRouteName('/'): KissRouteModel(
       widget: (_, __) => const UpComings(),
