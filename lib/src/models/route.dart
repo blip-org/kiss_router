@@ -32,12 +32,13 @@ class KissRouteModel<A> {
     this.showBottomNavbar = true,
     this.transitionsBuilder,
     this.fire404 = false,
-  }) : assert(
-          substituteRouteName?.isInvalid ?? false,
-          'Substition route name is not valid. It shouldn\'t start with a slash "/" or end with a slash "/)',
-        ) {
+  }) {
     transitionsBuilder ??= _defaultTransitionsBuilder;
-
+    if (substituteRouteName?.isInvalid ?? false) {
+      throw Exception(
+        'The substitute route: $substituteRouteName is not valid, It shouldn\'t start with a slash "/" or end with a slash "/)',
+      );
+    }
     for (final route in subRoutes.keys) {
       if (!route.isInvalid) continue;
       throw Exception(
@@ -46,8 +47,12 @@ class KissRouteModel<A> {
     }
   }
 
-  Widget buildWidget(BuildContext context) {
-    return widget(context, routeArguments);
+  Widget buildWidget(
+    BuildContext context, {
+    Widget Function(Widget child)? wrapper,
+  }) {
+    final child = widget(context, routeArguments);
+    return wrapper?.call(child) ?? child;
   }
 
   Widget _defaultTransitionsBuilder(

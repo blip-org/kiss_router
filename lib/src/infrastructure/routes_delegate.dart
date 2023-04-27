@@ -1,5 +1,7 @@
 part of kiss_router;
 
+typedef WrapperBuilder = Widget Function(BuildContext context, Widget child);
+
 class KissRoutesDelegate {
   late final String _notFoundRoute;
   late final String _initialRoute;
@@ -15,6 +17,7 @@ class KissRoutesDelegate {
     _notFoundRoute = notFoundRoute ?? '/404';
     _initialRoute = initialRoute;
     _routes = routes;
+    _groups = groups;
   }
 
   String get initialRoute => _initialRoute;
@@ -59,5 +62,35 @@ class KissRoutesDelegate {
     }
 
     return routeNames;
+  }
+
+  /// This method searches for each GroupModel that has [routeName] implemented.
+  List<GroupModel> routeGroupModels(String routeName) {
+    final models = <GroupModel>[];
+
+    for (final group in _groups) {
+      final index = group.routes.indexWhere((route) {
+        print('---> Searching with $routeName in ${route.value}');
+        // TODO: normalie the "routeName" properly.
+        return route.value.replaceAll('/', '') == routeName.replaceAll('/', '');
+      });
+      if (!index.isNegative) models.add(group);
+    }
+
+    print('==== Got group models: ${_groups.length}');
+    print('==== Got group model: ${models.length}');
+
+    return models;
+  }
+
+  Widget wrapperBuilder(RouteSettings settings, BuildContext context, Widget child) {
+    final models = routeGroupModels(settings.name!).reversed.toList();
+    if (models.isEmpty) return child;
+    return models[0].builder?.call(context, _buildWrapperRecursivelly(models, 0, child)) ?? child;
+  }
+
+  Widget _buildWrapperRecursivelly(List<GroupModel> groups, int index, Widget child) {
+    if (index > groups.length) return child;
+    return _buildWrapperRecursivelly(groups, index + 1, child);
   }
 }

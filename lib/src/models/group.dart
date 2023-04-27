@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+part of kiss_router;
 
 class GroupModel {
-  /// A non-nullable list of route names.
+  /// A non-nullable list of [GroupName]s.
   ///
   /// These routes will be wrapped with a top-level
   /// widget/route by provided [builder].
-  final List<String> routes;
+  final List<GroupName> routes;
 
   /// A unique identification string for current [GroupModel].
   ///
@@ -14,7 +14,7 @@ class GroupModel {
   final String? flowID;
 
   /// A top-level wrapper builder for provided [routes].
-  final Widget Function(BuildContext context)? builder;
+  final Widget Function(BuildContext context, Widget child)? builder;
 
   const GroupModel({
     required this.routes,
