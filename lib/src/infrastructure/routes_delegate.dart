@@ -84,13 +84,13 @@ class KissRoutesDelegate {
   }
 
   Widget wrapperBuilder(RouteSettings settings, BuildContext context, Widget child) {
-    final models = routeGroupModels(settings.name!).reversed.toList();
+    final models = routeGroupModels(settings.name!).toList();
     if (models.isEmpty) return child;
-    return models[0].builder?.call(context, _buildWrapperRecursivelly(models, 0, child)) ?? child;
+    return models[0].builder?.call(context, _buildWrapperRecursively(models, 0, child)) ?? child;
   }
 
-  Widget _buildWrapperRecursivelly(List<GroupModel> groups, int index, Widget child) {
+  Widget _buildWrapperRecursively(List<GroupModel> groups, int index, Widget child) {
     if (index > groups.length) return child;
-    return _buildWrapperRecursivelly(groups, index + 1, child);
+    return _buildWrapperRecursively(groups, index + 1, child);
   }
 }
