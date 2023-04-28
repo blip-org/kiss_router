@@ -1,67 +1,96 @@
 part of kiss_router;
 
+typedef WrapperBuilder = Widget Function(BuildContext context, Widget child);
+
 class KissRoutesDelegate {
+  late final String _notFoundRoute;
+  late final String _initialRoute;
+  late final Map<String, KissRouteModel> _routes;
+  late final List<GroupModel> _groups;
+
   KissRoutesDelegate({
-    required Map<KissRouteName, KissRouteModel> routes,
-    KissRouteName? notFoundRoute,
-    required KissRouteName initialRoute,
+    required Map<String, KissRouteModel> routes,
+    String? notFoundRoute,
+    required String initialRoute,
+    List<GroupModel> groups = const [],
   }) : assert(routes[notFoundRoute] != null) {
-    _notFoundRoute = notFoundRoute ?? KissRouteName('/404');
+    _notFoundRoute = notFoundRoute ?? '/404';
     _initialRoute = initialRoute;
     _routes = routes;
+    _groups = groups;
   }
 
-  late final KissRouteName _notFoundRoute;
-
-  late final KissRouteName _initialRoute;
-
-  late final Map<KissRouteName, KissRouteModel> _routes;
-
-  KissRouteName get initialRoute => _initialRoute;
+  String get initialRoute => _initialRoute;
 
   KissRouteModel getRoute(RouteSettings? routeSettings) {
-    KissRouteName? routeName;
+    late String routeName;
 
     if (routeSettings != null && routeSettings.name != null) {
-      routeName = KissRouteName(routeSettings.name!);
+      routeName = routeSettings.name!;
     } else {
       routeName = _notFoundRoute;
     }
 
-    KissRouteModel? route;
-    print("=============== route: $routeName");
     final subRouteNames = _subRouteNames(routeName);
-    print("=============== subRoutes: $subRouteNames");
-    if (subRouteNames != null) {
+
+    KissRouteModel? route;
+
+    if (subRouteNames == null) {
+      route = _routes[routeName];
+    } else {
       final mainRoute = subRouteNames[0];
       final subRouteName = subRouteNames[1];
       route = _routes[mainRoute]?.subRoutes[subRouteName];
-    } else {
-      route = _routes[routeName];
     }
 
     route ??= _routes[_notFoundRoute];
 
     if (routeSettings?.arguments != null) {
-      print("=========== arguments: ${routeSettings?.arguments}");
       route?.setArguments(routeSettings?.arguments);
     }
 
     return route!;
   }
 
-  List<KissRouteName>? _subRouteNames(KissRouteName routeName) {
-    List<KissRouteName> routeNames = [];
+  List<String>? _subRouteNames(String routeName) {
+    List<String> routeNames = [];
     final splitRouteName = routeName.toString().split('/')..removeAt(0);
-    print("========= splited: $splitRouteName");
-    if (!(splitRouteName.length > 1)) {
-      return null;
-    }
+    if (!(splitRouteName.length > 1)) return null;
 
     for (String route in splitRouteName) {
-      routeNames.add(KissRouteName('/$route'));
+      routeNames.add('/$route');
     }
-    print("==== looped route: $routeNames");
+
     return routeNames;
+  }
+
+  /// This method searches for each GroupModel that has [routeName] implemented.
+  List<GroupModel> routeGroupModels(String routeName) {
+    final models = <GroupModel>[];
+
+    for (final group in _groups) {
+      final index = group.routes.indexWhere((route) {
+        print('---> Searching with $routeName in ${route.value}');
+        // TODO: normalie the "routeName" properly.
+        return route.value.replaceAll('/', '') == routeName.replaceAll('/', '');
+      });
+      if (!index.isNegative) models.add(group);
+    }
+
+    print('==== Got group models: ${_groups.length}');
+    print('==== Got group model: ${models.length}');
+
+    return models;
+  }
+
+  Widget wrapperBuilder(RouteSettings settings, BuildContext context, Widget child) {
+    final models = routeGroupModels(settings.name!).toList();
+    if (models.isEmpty) return child;
+    return models[0].builder?.call(context, _buildWrapperRecursively(models, 0, child)) ?? child;
+  }
+
+  Widget _buildWrapperRecursively(List<GroupModel> groups, int index, Widget child) {
+    if (index > groups.length) return child;
+    return _buildWrapperRecursively(groups, index + 1, child);
   }
 }

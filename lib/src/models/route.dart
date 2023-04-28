@@ -4,13 +4,13 @@ typedef ScreenWidget<A> = Widget Function(BuildContext context, A? arguments);
 
 class KissRouteModel<A> {
   final ScreenWidget<A> widget;
-  final Map<KissRouteName, KissRouteModel> subRoutes;
+  final Map<String, KissRouteModel> subRoutes;
   final bool isPrivate;
   final bool isModal;
   final bool modalExpanded;
   final bool modalEnableDrag;
   final ModalType modalType;
-  final KissRouteName? substituteRouteName;
+  final String? substituteRouteName;
   final PreferredSizeWidget? appBar;
   final bool showBottomNavbar;
   RouteTransitionsBuilder? transitionsBuilder;
@@ -21,7 +21,7 @@ class KissRouteModel<A> {
 
   KissRouteModel({
     required this.widget,
-    this.subRoutes = const <KissRouteName, KissRouteModel>{},
+    this.subRoutes = const <String, KissRouteModel>{},
     this.isPrivate = false,
     this.isModal = false,
     this.modalExpanded = false,
@@ -34,10 +34,25 @@ class KissRouteModel<A> {
     this.fire404 = false,
   }) {
     transitionsBuilder ??= _defaultTransitionsBuilder;
+    if (substituteRouteName?.isInvalid ?? false) {
+      throw Exception(
+        'The substitute route: $substituteRouteName is not valid, It shouldn\'t start with a slash "/" or end with a slash "/)',
+      );
+    }
+    for (final route in subRoutes.keys) {
+      if (!route.isInvalid) continue;
+      throw Exception(
+        'The sub route: $route is not valid, It shouldn\'t start with a slash "/" or end with a slash "/)',
+      );
+    }
   }
 
-  Widget buildWidget(BuildContext context) {
-    return widget(context, routeArguments);
+  Widget buildWidget(
+    BuildContext context, {
+    Widget Function(Widget child)? wrapper,
+  }) {
+    final child = widget(context, routeArguments);
+    return wrapper?.call(child) ?? child;
   }
 
   Widget _defaultTransitionsBuilder(

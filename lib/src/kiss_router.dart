@@ -1,32 +1,26 @@
 library kiss_router;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kiss_router/src/utils.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as mb;
 
 import 'enums/modal_type.dart';
-import 'models/route_name.dart';
 
 part 'models/route.dart';
 part 'infrastructure/routes_delegate.dart';
 part 'state/provider.dart';
 part 'infrastructure/layout.dart';
+part 'models/group.dart';
+part 'models/group_name.dart';
 
 class KissRouter {
-  KissRouter({
-    required this.routesDelegate,
-  });
-
   final KissRoutesDelegate routesDelegate;
+  KissRouter({required this.routesDelegate});
 
   String get initialRoute => routesDelegate.initialRoute.toString();
 
-  KissRouteModel _getRoute(RouteSettings? routeSettings) {
-    return routesDelegate.getRoute(routeSettings);
-  }
-
   Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    KissRouteModel route = _getRoute(settings);
+    KissRouteModel route = routesDelegate.getRoute(settings);
 
     if (route.isModal && route.modalType == ModalType.material) {
       return mb.ModalSheetRoute(
@@ -59,22 +53,26 @@ class KissRouter {
     return <Route>[
       MaterialPageRoute(
         builder: (context) {
-          KissRouteModel route = _getRoute(RouteSettings(name: initialRoute));
-
-          return _getLayout(route.buildWidget(context), route);
+          KissRouteModel route = routesDelegate.getRoute(RouteSettings(name: initialRoute));
+          return _getLayout(
+            route,
+            routesDelegate.wrapperBuilder(
+              RouteSettings(name: initialRoute),
+              context,
+              route.buildWidget(context),
+            ),
+          );
         },
       )
     ];
   }
 
   PreferredSizeWidget _getAppBar({required BuildContext context, PreferredSizeWidget? appBar}) {
-    if (appBar == null) {
-      return noAppBar;
-    }
+    if (appBar == null) return noAppBar;
     return appBar;
   }
 
-  Widget _getLayout(Widget screen, KissRouteModel route) {
+  Widget _getLayout(KissRouteModel route, Widget screen) {
     if (route.isModal) return screen;
     return Builder(
       builder: (context) {
@@ -88,34 +86,58 @@ class KissRouter {
   }
 
   Widget buildPageWithAuthCheck(RouteSettings settings) {
-    KissRouteModel route = _getRoute(settings);
+    KissRouteModel route = routesDelegate.getRoute(settings);
     return Builder(builder: (context) {
-      final isAuthenticated = true; //context.watch<KissProvider>().isAuthenticated;
+      // context.watch<KissProvider>().isAuthenticated;
+      const isAuthenticated = true;
 
       if (isAuthenticated && route.isPrivate) {
-        return _getLayout(route.buildWidget(context), route);
+        return _getLayout(
+          route,
+          route.buildWidget(
+            context,
+            wrapper: (child) => routesDelegate.wrapperBuilder(settings, context, child),
+          ),
+        );
       }
 
-      if (!isAuthenticated && route.isPrivate) {
-        if (route.substituteRouteName == null) {
-          fire404(context);
-        } else {
-          route = _getRoute(RouteSettings(
-            name: route.substituteRouteName?.value,
-            arguments: settings.arguments,
-          ));
+      // if (!isAuthenticated && route.isPrivate) {
+      //   if (route.substituteRouteName == null) {
+      //     fire404(context);
+      //   } else {
+      //     route = _getRoute(RouteSettings(
+      //       name: route.substituteRouteName?.value,
+      //       arguments: settings.arguments,
+      //     ));
 
-          return _getLayout(route.buildWidget(context), route);
-        }
-      }
+      //     return _getLayout(route.buildWidget(context), route);
+      //   }
+      // }
 
-      return _getLayout(route.buildWidget(context), route);
+      return _getLayout(
+        route,
+        route.buildWidget(
+          context,
+          wrapper: (child) => routesDelegate.wrapperBuilder(
+            settings,
+            context,
+            child,
+          ),
+        ),
+      );
     });
   }
 
   Widget fire404(BuildContext context) {
-    final route = _getRoute(const RouteSettings());
-    return _getLayout(route.buildWidget(context), route);
+    const settings = RouteSettings();
+    final route = routesDelegate.getRoute(settings);
+    return _getLayout(
+      route,
+      route.buildWidget(
+        context,
+        wrapper: (child) => routesDelegate.wrapperBuilder(settings, context, child),
+      ),
+    );
   }
 
   PreferredSize noAppBar = PreferredSize(
