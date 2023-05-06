@@ -6,10 +6,9 @@ class KissRouteModel<A> {
   final ScreenWidget<A> widget;
   final Map<String, KissRouteModel> subRoutes;
   final bool isPrivate;
-  final bool isModal;
-  final bool modalExpanded;
-  final bool modalEnableDrag;
-  final ModalType modalType;
+
+  /// If not null route screen is navigated as modal
+  final ModalConfig? modalConfig;
   final String? substituteRouteName;
   final PreferredSizeWidget? appBar;
   final bool showBottomNavbar;
@@ -19,14 +18,13 @@ class KissRouteModel<A> {
 
   A? routeArguments;
 
+  bool get isModal => modalConfig != null;
+
   KissRouteModel({
     required this.widget,
     this.subRoutes = const <String, KissRouteModel>{},
     this.isPrivate = false,
-    this.isModal = false,
-    this.modalExpanded = false,
-    this.modalEnableDrag = true,
-    this.modalType = ModalType.material,
+    this.modalConfig,
     this.substituteRouteName,
     this.appBar,
     this.showBottomNavbar = true,
