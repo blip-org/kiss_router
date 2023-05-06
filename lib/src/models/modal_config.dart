@@ -23,7 +23,7 @@ class ModalConfig {
   ///   }
   /// }
   /// ```
-  final Color modalBarrierColor;
+  final Color barrierColor;
 
   /// Define if you want to stretch the modal with full height of the screen;
   final bool expanded;
@@ -45,7 +45,7 @@ class ModalConfig {
 
   ModalConfig({
     this.isDismissible = true,
-    this.modalBarrierColor = Colors.transparent,
+    this.barrierColor = Colors.transparent,
     this.expanded = true,
     this.modalType,
     this.enableDrag = false,

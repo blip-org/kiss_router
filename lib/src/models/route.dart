@@ -6,6 +6,8 @@ class KissRouteModel<A> {
   final ScreenWidget<A> widget;
   final Map<String, KissRouteModel> subRoutes;
   final bool isPrivate;
+
+  /// If not null route screen is navigated as modal
   final ModalConfig? modalConfig;
   final String? substituteRouteName;
   final PreferredSizeWidget? appBar;
