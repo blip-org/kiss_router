@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kiss_router/src/utils.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as mb;
 
+import '../kiss_router.dart';
 import 'enums/modal_type.dart';
 
 part 'models/route.dart';
@@ -22,21 +23,21 @@ class KissRouter {
   Route<dynamic> onGenerateRoute(RouteSettings settings) {
     KissRouteModel route = routesDelegate.getRoute(settings);
 
-    if (route.isModal && route.modalType == ModalType.material) {
+    if (route.isModal && route.modalConfig?.modalType == ModalType.material) {
       return mb.ModalSheetRoute(
         builder: (_) => buildPageWithAuthCheck(settings),
         settings: settings,
-        expanded: route.modalExpanded,
-        enableDrag: route.modalEnableDrag,
+        expanded: route.modalConfig!.expanded,
+        enableDrag: route.modalConfig!.enableDrag,
       );
     }
 
-    if (route.isModal && route.modalType == ModalType.cupertino) {
+    if (route.isModal && route.modalConfig?.modalType == ModalType.cupertino) {
       return mb.CupertinoModalBottomSheetRoute(
         builder: (_) => buildPageWithAuthCheck(settings),
         settings: settings,
-        expanded: route.modalExpanded,
-        enableDrag: route.modalEnableDrag,
+        expanded: route.modalConfig!.expanded,
+        enableDrag: route.modalConfig!.enableDrag,
       );
     }
 
